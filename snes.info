@@ -1,0 +1,4 @@
+name = snes
+description = SNES trivia game
+package = Example modules
+core = 7.x

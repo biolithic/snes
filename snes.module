@@ -1,0 +1,158 @@
+<?php
+
+function snes_menu()
+{
+$items = array();
+$items['snes/play'] = array(
+'title' => 'Play the SNES trivia game!',
+'page callback' => 'drupal_get_form',
+'page arguments' => array('snes_form'),
+'access callback' => TRUE,
+'description' => 'Play a fun of SNES trivia to demonstrate custom Drupal module development',
+);
+return $items;
+}
+
+function snes_form($form, &$form_state) {
+  $form['question1'] = array(
+    '#type' => 'radios',
+    '#options' => array(
+      'a1'   => t('Terrabound'),
+      'a2' => t('Zelda - A Link to the Present'),
+      'a3'      => t('Earthbound'),
+    ),
+    '#title' => t('Which RPG featured a little boy using a baseball bat, ordering pizza, and checking the game map out of the public library?')
+  );
+  $form['question1yes'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Correct!'),
+    // This #states rule says that the "high school" fieldset should only
+    // be shown if the "student_type" form element is set to "High School".
+    '#states' => array(
+      'visible' => array(
+        ':input[name="question1"]' => array('value' => 'a3'),
+      ),
+    ),
+  );
+
+  $form['question2'] = array(
+    '#type' => 'radios',
+    '#options' => array(
+      'b1'   => t('Super Famicom'),
+      'b2' => t('Nintendo Master System'),
+      'b3'      => t('Super Nintendo 16'),
+    ),
+    '#title' => t('What was the system called in Japan where it originated from?'),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="question1"]' => array('value' => 'a3'),
+      ),
+    ),
+  );
+  $form['question2yes'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Correct!'),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="question2"]' => array('value' => 'b1'),
+      ),
+    ),
+  );
+  
+$form['question3'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Super Mario Kart has this type of graphics processor added to it which was revolutionary at the time.'),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="question2"]' => array('value' => 'b1'),
+      ),
+    ),
+  );
+  $form['question3yes'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Correct!'),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="question3"]' => array('value' => 'Mode 7'),
+      ),
+    ),
+  );
+  
+  $form['question4'] = array(
+    '#type' => 'radios',
+    '#title' => t('Mortal Kombat for the SNES and Genesis formed the need for what content ratings group?'),
+    '#options' => array(
+      'c1'   => t('msrp'),
+      'c2' => t('esrb'),
+      'c3'      => t('mpaa'),
+    ),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="question3"]' => array('value' => 'Mode 7'),
+      ),
+    ),
+  );
+  $form['question4yes'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Correct!'),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="question4"]' => array('value' => 'c2'),
+      ),
+    ),
+  );
+  
+  $form['question5'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Before their smash hit with Donkey Kong, what animal games did Rare produce for the SNES?'),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="question4"]' => array('value' => 'c2'),
+      ),
+    ),
+  );
+  
+  $form['question5a'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Banjo-Kablooey'),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="question4"]' => array('value' => 'c2'),
+      ),
+    ),
+  );
+  
+  $form['question5b'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Stamper: Jungle Trouble'),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="question4"]' => array('value' => 'c2'),
+      ),
+    ),
+  );
+  
+  $form['question5c'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Battletoads in Battlemaniacs'),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="question4"]' => array('value' => 'c2'),
+      ),
+    ),
+  );
+  
+  $form['question5yes'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Correct!'),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="question5a"]' => array('checked' => FALSE),
+        ':input[name="question5b"]' => array('checked' => FALSE),
+        ':input[name="question5c"]' => array('checked' => TRUE),
+      ),
+    ),
+  );
+  
+  return $form;
+}
